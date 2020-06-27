@@ -41,9 +41,9 @@ delay_RICH = hit_RICH * delay_EN + (1-hit_RICH) * delay_CS
 delay_RICH_AC = hit_RICH * delay_EN + (1-hit_RICH) * delay_AC
 delay_ACBC = hit_ACBC * delay_EN + (1-hit_ACBC) * delay_CS
 delay_ACBC_AC = hit_ACBC * delay_EN + (1-hit_ACBC) * delay_AC
-delay_dsrb_0 = hit_dsrb_0 * delay_EN + (1-hit_dsrb_0) * delay_CS
-delay_dsrb_5 = hit_dsrb_5 * delay_EN + (1-hit_dsrb_5) * delay_CS
-delay_dsrb_10 = hit_dsrb_10 * delay_EN + (1-hit_dsrb_10) * delay_CS
+delay_dsrb_0 = hit_dsrb_0 * delay_EN + (1-hit_dsrb_0) * delay_AC
+delay_dsrb_5 = hit_dsrb_5 * delay_EN + (1-hit_dsrb_5) * delay_AC
+delay_dsrb_10 = hit_dsrb_10 * delay_EN + (1-hit_dsrb_10) * delay_AC
 
 
 PoF_MAP = [data_MAP.loc[data_MAP['speed_mu'] == i].iloc[0]['avg_PoF'] for i in x_axis]
@@ -70,7 +70,7 @@ plt.rcParams['font.family'] = 'Times New Roman'
 plt.rcParams['mathtext.fontset'] = 'stix'  # ['dejavusans', 'dejavuserif', 'cm', 'stix', 'stixsans', 'custom']
 
 plt.rc('font', size=SMALL_SIZE)  # controls default text sizes
-plt.rc('axes', titlesize=SMALL_SIZE)  # fontsize of the axes title
+plt.rc('axes', titlesize=BIGGER_SIZE)  # fontsize of the axes title
 plt.rc('axes', labelsize=BIGGER_SIZE)  # fontsize of the x and y labels
 plt.rc('xtick', labelsize=SMALL_SIZE)  # fontsize of the tick labels
 plt.rc('ytick', labelsize=SMALL_SIZE)  # fontsize of the tick labels
@@ -90,16 +90,18 @@ axs[0].plot(x_axis, delay_MAP_AC, color='#884EA0', linewidth=3.0, label='MAP-AC'
 axs[0].plot(x_axis, delay_MAP, color='#884EA0', linewidth=3.0, label='MAP', linestyle=':', zorder=0)
 axs[0].plot(x_axis, delay_RICH_AC, color='#2471A3', linewidth=3.0, label='RICH-AC', zorder=0)
 axs[0].plot(x_axis, delay_RICH, color='#2471A3', linewidth=3.0, label='RICH', linestyle=':', zorder=0)
-axs[0].plot(x_axis, delay_dsrb_0, color='#1ABC9C', linewidth=3.0, label=r"Distr $\xi=0$", zorder=0)
-axs[0].plot(x_axis, delay_dsrb_10, color='#F39C12', linewidth=3.0, label=r"Distr $\xi=10$", zorder=0)
+axs[0].plot(x_axis, delay_dsrb_0, color='#1ABC9C', linewidth=3.0, label=r"Distr-AC $\xi=0$", zorder=0)
+axs[0].plot(x_axis, delay_dsrb_10, color='#F39C12', linewidth=3.0, label=r"Distr-AC $\xi=10$", zorder=0)
 
-axs[0].legend(ncol=4, bbox_to_anchor=(0, 1, 1, 1), mode='expand', loc=3)
+axs[0].legend(ncol=4, bbox_to_anchor=(-0.1, 1, 1.12, 1), mode='expand', loc=3)
 
 axs[0].set_xlabel('speed $\mu$ (m/s)')
-axs[0].set_ylabel('average access delay (ms)')
+axs[0].set_ylabel('expected access delay (ms)')
 
 axs[0].grid()
 axs[0].set_facecolor('#E8EAF6')
+
+axs[0].set_title('(a)', y=-0.35)
 
 # -------------------------------
 axs[1].set_xlim(15, 33)
@@ -113,14 +115,15 @@ axs[1].plot(x_axis, PoF_MAP_AC, color='#884EA0', linewidth=3.0, label='MAP-AC', 
 axs[1].plot(x_axis, PoF_MAP, color='#884EA0', linewidth=3.0, label='MAP', linestyle=':', zorder=0)
 axs[1].plot(x_axis, PoF_RICH_AC, color='#2471A3', linewidth=3.0, label='RICH-AC', zorder=0)
 axs[1].plot(x_axis, PoF_RICH, color='#2471A3', linewidth=3.0, label='RICH', linestyle=':', zorder=0)
-axs[1].plot(x_axis, PoF_dsrb_0, color='#1ABC9C', linewidth=3.0, label=r"Distr $\xi=0$", zorder=0)
-axs[1].plot(x_axis, PoF_dsrb_10, color='#F39C12', linewidth=3.0, label=r"Distr $\xi=10$", zorder=0)
+axs[1].plot(x_axis, PoF_dsrb_0, color='#1ABC9C', linewidth=3.0, label=r"Distr-AC $\xi=0$", zorder=0)
+axs[1].plot(x_axis, PoF_dsrb_10, color='#F39C12', linewidth=3.0, label=r"Distr-AC $\xi=10$", zorder=0)
 
 axs[1].set_xlabel('speed $\mu$ (m/s)')
-axs[1].set_ylabel('Price of fog (PoF)')
+axs[1].set_ylabel('Price of Fog (PoF)')
 
 axs[1].grid()
 axs[1].set_facecolor('#E8EAF6')
+axs[1].set_title('(b)', y=-0.35)
 
 # -------------------------------
 # Picture in picture
@@ -132,8 +135,8 @@ axins.plot(x_axis, PoF_MAP_AC, color='#884EA0', linewidth=3.0, label='MAP-AC', z
 axins.plot(x_axis, PoF_MAP, color='#884EA0', linewidth=3.0, label='MAP', linestyle=':', zorder=0)
 axins.plot(x_axis, PoF_RICH_AC, color='#2471A3', linewidth=3.0, label='RICH-AC', zorder=0)
 axins.plot(x_axis, PoF_RICH, color='#2471A3', linewidth=3.0, label='RICH', linestyle=':', zorder=0)
-axins.plot(x_axis, PoF_dsrb_0, color='#1ABC9C', linewidth=3.0, label=r"Distr $\xi=0$", zorder=0)
-axins.plot(x_axis, PoF_dsrb_10, color='#F39C12', linewidth=3.0, label=r"Distr $\xi=10$", zorder=0)
+axins.plot(x_axis, PoF_dsrb_0, color='#1ABC9C', linewidth=3.0, label=r"Distr-AC $\xi=0$", zorder=0)
+axins.plot(x_axis, PoF_dsrb_10, color='#F39C12', linewidth=3.0, label=r"Distr-AC $\xi=10$", zorder=0)
 axins.set_xlim(30, 33)
 axins.set_ylim(2, 4.5)
 
